@@ -1,0 +1,68 @@
+.title{
+            text-align: center;
+            font-size: 32px;
+            color: #00796b;
+            margin-bottom: 30px;
+        }
+        body{
+            background-color:lightcyan;
+        }
+
+        button{
+            display: flex;
+            background-color: #66ccff;
+            margin: 50px auto;
+        }
+        
+        #dice-result{
+            width: 360px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #dice-result p{
+            display: inline-block;
+            margin: 0;
+            padding: 8px;
+            background-color: #e0f7fa;
+            border-radius: 4px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        #name-result-cn {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            width: 360px; /* 4个名字 * 70px + 3个间隙 * 15px = 325px，适当增加以确保完全容纳 */
+            margin: 0 auto;
+            justify-content: flex-start;
+        }
+        #name-result-cn p {
+            margin: 0;
+            padding: 8px;
+            background-color: #e0f7fa;
+            border-radius: 4px;
+            width: 70px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        form {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .dice-radio {
+            margin-right: 5px;
+            /* 单选按钮本身通常不受font-size影响很大，可以调整其大小 */
+            transform: scale(1.2);
+        }
+        
+        form label {
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
