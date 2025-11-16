@@ -11,11 +11,14 @@
     <ul>
         <li>
             <a href="https://space.bilibili.com/354031498?spm_id_from=333.1007.0.0" target="_blank">我的bilibili主页</a>
+            <a href="https://github.com/nin3tys/trpg-dice-name" target="_blank">这个项目的源码</a>
+            <a href="https://picjumbo.com/" target="_blank">图片来源</a>
         </li>
     </ul>
-    <h1 class="title">你的TRPG小帮手</h1>
-    <button id="roll-dice">掷骰子</button>
-    <p id="dice-result"></p>
+    <div class="container">
+        <h1 class="title">你的TRPG小帮手</h1>
+        <button id="roll-dice">掷骰子</button>
+        <p id="dice-result"></p>
     <form>
         <label><input type="radio" name="dice-type" value="4" class="dice-radio">4面骰子</label>
         <label><input type="radio" name="dice-type" value="6" class="dice-radio">6面骰子</label>
@@ -25,19 +28,36 @@
         <label><input type="radio" name="dice-type" value="20" class="dice-radio">20面骰子</label>
         <label><input type="radio" name="dice-type" value="100" class="dice-radio">100面骰子</label>
     </form>
+    <form>
+        <label><input type="radio" name="dice-num" value="1">1d</label>
+        <label><input type="radio" name="dice-num" value="2">2d</label>
+        <label><input type="radio" name="dice-num" value="3">3d</label>
+        <label><input type="radio" name="dice-num" value="4">4d</label>
+        <label><input type="radio" name="dice-num" value="5">5d</label>
+        <label><input type="radio" name="dice-num" value="6">6d</label>
+    </form>
     <button id="roll-name">随机姓名</button>
     <div id="name-result-cn"></div>
+    </div>
     
+    
+    
+    <div class="footer">
+    </div> 
 </body>
 <script>
     document.getElementById("roll-dice").addEventListener("click", function() {
-        if (document.querySelector('input[name="dice-type"]:checked')) {
+        if (document.querySelector('input[name="dice-type"]:checked')&&document.querySelector('input[name="dice-num"]:checked')) {
             var diceType = document.querySelector('input[name="dice-type"]:checked').value;
-            var diceRoll = Math.floor(Math.random() * parseInt(diceType) + 1);
+            var diceNum = document.querySelector('input[name="dice-num"]:checked').value;
+            var diceRoll = [];
+            for (var i = 0; i < diceNum; i++) {
+                diceRoll.push(Math.floor(Math.random() * parseInt(diceType) + 1));
+            }
             // 创建p元素来应用样式
-            document.getElementById("dice-result").innerHTML="<p>你掷出的点数是：" + diceRoll + "，喵~</p>";
+            document.getElementById("dice-result").innerHTML="<p>你掷出的点数是：" + diceRoll.join("，") + "，喵~</p>";
         } else {
-            alert("请选择骰子类型");
+            alert("请选择骰子类型和数量");
         }
     });
 //上面是掷骰子的功能

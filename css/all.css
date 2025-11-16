@@ -6,14 +6,28 @@
         }
         body{
             background-color:lightcyan;
+            text-align: center; /* 确保inline-block的container居中 */
         }
 
         button{
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 24px;
+            color: #000000;
+            font-family: inherit; /* 使用与input相同的默认字体 */
+            cursor: pointer;
+            transition: all 0.2s ease;
             display: flex;
-            background-color: #66ccff;
+            background-color: #39C5BB;
             margin: 50px auto;
         }
         
+        button:hover{
+            background-color: #26a69a;
+            transform: translateY(-2px);
+        }
+
         #dice-result{
             width: 360px;
             margin: 0 auto;
@@ -65,4 +79,56 @@
             font-size: 18px;
             vertical-align: middle;
             white-space: nowrap;
+            width: 120px;
+            height: 40px;
+            background-color: #66ccff;
+            border-radius: 10px;
+            color: #000000; /* 深色字体确保在浅蓝色背景上的可读性 */
+            font-weight: bold; /* 加粗字体增强可读性 */
+            line-height: 40px; /* 垂直居中文字 */
+            text-align: center; /* 水平居中文字 */
+            cursor: pointer; /* 鼠标悬停时显示指针 */
+            transition: all 0.2s ease; /* 添加过渡效果 */
+        }
+        
+        /* 当鼠标悬停时调整样式 */
+        form label:hover {
+            background-color: #4da6ff; /* 悬停时背景色稍深 */
+            transform: translateY(-2px); /* 轻微上浮效果 */
+        }
+        
+        /* 当radio按钮被选中时，调整对应的label样式 */
+        form input[type="radio"]:checked + label {
+            background-color: #007acc; /* 选中时背景色更深 */
+            color: #ffffff; /* 选中时文字变为白色 */
+        }
+        
+        /* 确保radio按钮在label内居中 */
+        form input[type="radio"] {
+            position: relative;
+            margin-right: 5px;
+            transform: scale(1.2); /* 稍微放大radio按钮 */
+            vertical-align: middle;
+        }
+        /*.footer{
+            position:relative;
+            width:100%;
+            margin-top: 50px;
+        }
+        @media (max-width:768px){
+            .content{
+                height:30vh;
+            }
+        }*/
+
+        .container{
+            border:none;
+            border-radius: 10px;
+            display: inline-block; /* 使容器只占用内容所需的宽度 */
+            padding: 20px; /* 添加内边距，确保内容不紧贴边框 */
+            margin: 20px auto; /* 添加外边距，居中显示 */
+            text-align: center; /* 文本居中 */
+            max-width: 90%; /* 限制最大宽度，防止在大屏幕上过宽 */
+            box-sizing: border-box; /* 确保内边距和边框不会增加总宽度 */
+            backdrop-filter: blur(10px) brightness(150%);
         }
