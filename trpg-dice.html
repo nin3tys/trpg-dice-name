@@ -3,44 +3,72 @@
 <head>
     <title>TRPGdn</title>
     <link rel="stylesheet" href="css/all.css">
-    <style>
-       
-    </style>
+    <!-- 所有样式已转移到all.css文件 -->
+    <!-- 引入Transformers.js库 -->
+    
 </head>
 <body>
-    <ul>
-        <li>
-            <a href="https://space.bilibili.com/354031498?spm_id_from=333.1007.0.0" target="_blank">我的bilibili主页</a>
-            <a href="https://github.com/nin3tys/trpg-dice-name" target="_blank">这个项目的源码</a>
-            <a href="https://picjumbo.com/" target="_blank">图片来源</a>
-        </li>
-    </ul>
+    <!-- 深蓝色导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="https://space.bilibili.com/354031498?spm_id_from=333.1007.0.0" target="_blank">bilibili主页</a>
+            <a href="https://github.com/nin3tys/trpg-dice-name" target="_blank">github</a>
+            <a href="https://afdian.com/a/nin3tys" target="_blank">爱发电</a>
+        </div>
+    </nav>
     <div class="container">
         <h1 class="title">你的TRPG小帮手</h1>
-        <button id="roll-dice">掷骰子</button>
-        <p id="dice-result"></p>
-    <form>
-        <label><input type="radio" name="dice-type" value="4" class="dice-radio">4面骰子</label>
-        <label><input type="radio" name="dice-type" value="6" class="dice-radio">6面骰子</label>
-        <label><input type="radio" name="dice-type" value="8" class="dice-radio">8面骰子</label>
-        <label><input type="radio" name="dice-type" value="10" class="dice-radio">10面骰子</label>
-        <label><input type="radio" name="dice-type" value="12" class="dice-radio">12面骰子</label>
-        <label><input type="radio" name="dice-type" value="20" class="dice-radio">20面骰子</label>
-        <label><input type="radio" name="dice-type" value="100" class="dice-radio">100面骰子</label>
-    </form>
-    <form>
-        <label><input type="radio" name="dice-num" value="1">1d</label>
-        <label><input type="radio" name="dice-num" value="2">2d</label>
-        <label><input type="radio" name="dice-num" value="3">3d</label>
-        <label><input type="radio" name="dice-num" value="4">4d</label>
-        <label><input type="radio" name="dice-num" value="5">5d</label>
-        <label><input type="radio" name="dice-num" value="6">6d</label>
-    </form>
-    <button id="roll-name">随机姓名</button>
-    <div id="name-result-cn"></div>
+        <!-- 骰子功能区域 -->
+        <div class="function-section dice-section">
+            <button id="roll-dice">掷骰子</button>
+            <p id="dice-result"></p>
+            <form>
+                <label><input type="radio" name="dice-type" value="4" class="dice-radio">4面骰子</label>
+                <label><input type="radio" name="dice-type" value="6" class="dice-radio">6面骰子</label>
+                <label><input type="radio" name="dice-type" value="8" class="dice-radio">8面骰子</label>
+                <label><input type="radio" name="dice-type" value="10" class="dice-radio">10面骰子</label>
+                <label><input type="radio" name="dice-type" value="12" class="dice-radio">12面骰子</label>
+                <label><input type="radio" name="dice-type" value="20" class="dice-radio">20面骰子</label>
+                <label><input type="radio" name="dice-type" value="100" class="dice-radio">100面骰子</label>
+            </form>
+            <form>
+                <label><input type="radio" name="dice-num" value="1">1d</label>
+                <label><input type="radio" name="dice-num" value="2">2d</label>
+                <label><input type="radio" name="dice-num" value="3">3d</label>
+                <label><input type="radio" name="dice-num" value="4">4d</label>
+                <label><input type="radio" name="dice-num" value="5">5d</label>
+                <label><input type="radio" name="dice-num" value="6">6d</label>
+            </form>
+        </div>
+        <!-- 随机姓名功能区域 -->
+        <div class="function-section name-section">
+            <button id="roll-name">随机姓名</button>
+            <div id="name-result-cn"></div>
+            <form>
+                <label><input type="radio" name="name-type" value="cn">中式姓名</label>
+                <label><input type="radio" name="name-type" value="en">欧美式姓名</label>
+            </form>
+        </div>
+
+    <div class="note">
+        <div class="note-input-section">
+            <label><input type="text" id="note-input" placeholder="输入笔记备注"></label>
+            <button id="take-note">记笔记</button>
+            <button id="clear-note">清空笔记</button>
+        </div>
+        <div id="note-container" class="note-cards-container">
+            <!-- 笔记卡片将在这里动态添加 -->
+        </div>
+    </div>
+
+    <div class="music_player">
+        <!-- 音频播放器 -->
+        <audio id="bgm" src="" controls></audio>
+        <!-- 文件选择输入框，用于导入本地音频文件 -->
+        <input type="file" id="audioFile" accept="audio/*">
     </div>
     
-    
+    </div>
     
     <div class="footer">
     </div> 
@@ -63,26 +91,142 @@
 //上面是掷骰子的功能
 //下面是随机姓名的功能
     document.getElementById("roll-name").addEventListener("click", function() {
-        var family_names_cn = ["赵", "钱", "孙", "李", "周", "吴", "郑", "王", "冯", "陈", "褚", "卫", "蒋", "沈", "韩", "杨", "朱", "秦", "尤", "许", "何", "吕", "施", "张", "孔", "曹", "严", "华", "金", "魏", "陶", "姜", "戚", "谢", "邹", "喻", "柏", "水", "窦", "章"];
-        var names_cn = ["汀兰","栖梧","见溪","沐风","知夏","望舒","寻禾","听竹","观云","遇杉","念荷","辞霜","访梅","枕月","清和","景行","书言","安隅","允安","思齐","乐予","敬之","清晏","温言","舒然","承泽","知予","良辰","星辞","云舒","风禾","月见","时安","念初","清越","星落","晚舟","轻絮","知乐","岁安","晴川","星遥","疏桐","雁归","江雪","秋白","春和","暮雪","朝暮","云深","鹤归","星沉","烟霞","松间","鹿鸣","山月"]
+        if (!document.querySelector('input[name="name-type"]:checked')) {
+            alert("请选择姓名类型");
+            return;
+        }
+        
+        var nameType = document.querySelector('input[name="name-type"]:checked').value;
         // 清空之前的结果
         document.getElementById("name-result-cn").innerHTML = "";
         
-        // 循环生成8个随机姓名，确保两排各4个
-        for (var i = 0; i < 8; i++) {
-            // 每次循环都生成新的随机姓名
-            var randomFamilyName = family_names_cn[Math.floor(Math.random() * family_names_cn.length)];
-            var randomName = names_cn[Math.floor(Math.random() * names_cn.length)];
+        if (nameType == "cn") {
+            // 中文姓名
+            var family_names_cn = ["赵", "钱", "孙", "李", "周", "吴", "郑", "王", "冯", "陈", "褚", "卫", "蒋", "沈", "韩", "杨", "朱", "秦", "尤", "许", "何", "吕", "施", "张", "孔", "曹", "严", "华", "金", "魏", "陶", "姜", "戚", "谢", "邹", "喻", "柏", "水", "窦", "章"];
+            var names_cn = ["汀兰","栖梧","见溪","沐风","知夏","望舒","寻禾","听竹","观云","遇杉","念荷","辞霜","访梅","枕月","清和","景行","书言","安隅","允安","思齐","乐予","敬之","清晏","温言","舒然","承泽","知予","良辰","星辞","云舒","风禾","月见","时安","念初","清越","星落","晚舟","轻絮","知乐","岁安","晴川","星遥","疏桐","雁归","江雪","秋白","春和","暮雪","朝暮","云深","鹤归","星沉","烟霞","松间","鹿鸣","山月"];
             
-            // 创建新的段落元素来显示每个结果
-            var resultElement = document.createElement("p");
-            resultElement.textContent = randomFamilyName + randomName;
+            // 循环生成8个随机姓名，确保两排各4个
+            for (var i = 0; i < 8; i++) {
+                // 每次循环都生成新的随机姓名
+                var randomFamilyName = family_names_cn[Math.floor(Math.random() * family_names_cn.length)];
+                var randomName = names_cn[Math.floor(Math.random() * names_cn.length)];
+                
+                // 创建新的段落元素来显示每个结果
+                var resultElement = document.createElement("p");
+                resultElement.textContent = randomFamilyName + randomName;
+                
+                // 将新元素添加到结果容器中
+                document.getElementById("name-result-cn").appendChild(resultElement);
+            }
+        } else if (nameType == "en") {
+            // 英文姓名（中文音译）
+            var family_names_en = ["史密斯", "约翰逊", "威廉姆斯", "琼斯", "布朗", "戴维斯", "米勒", "威尔逊", "摩尔", "泰勒", "安德森", "托马斯", "杰克逊", "怀特", "哈里斯", "马丁", "汤普森", "加西亚", "马丁内斯", "罗宾逊"];
+            var names_en = ["詹姆斯", "约翰", "罗伯特", "迈克尔", "威廉", "大卫", "理查德", "约瑟夫", "托马斯", "查尔斯", "克里斯托弗", "丹尼尔", "马修", "安东尼", "马克", "唐纳德", "史蒂文", "保罗", "安德鲁", "约书亚"];
             
-            // 将新元素添加到结果容器中
-            document.getElementById("name-result-cn").appendChild(resultElement);
+            // 循环生成8个随机姓名，确保两排各4个
+            for (var i = 0; i < 8; i++) {
+                // 每次循环都生成新的随机姓名
+                var randomFamilyName = family_names_en[Math.floor(Math.random() * family_names_en.length)];
+                var randomName = names_en[Math.floor(Math.random() * names_en.length)];
+                
+                // 创建新的段落元素来显示每个结果
+                var resultElement = document.createElement("p");
+                resultElement.textContent = randomName + "·" + randomFamilyName;
+                
+                // 将新元素添加到结果容器中
+                document.getElementById("name-result-cn").appendChild(resultElement);
+            }
+        }
+    });
+    
+    function saveNote() {
+        var note = document.getElementById("note-input").value;
+        if (note.trim() !== "") {
+            // 移除空状态提示
+            var emptyState = document.querySelector(".note-empty-state");
+            if (emptyState) {
+                emptyState.remove();
+            }
+            
+            // 创建笔记卡片元素
+            var noteCard = document.createElement("div");
+            noteCard.className = "note-card";
+            
+            // 设置卡片内容（添加时间戳）
+            var now = new Date();
+            var timestamp = now.getHours().toString().padStart(2, '0') + ':' + 
+                            now.getMinutes().toString().padStart(2, '0') + ':' + 
+                            now.getSeconds().toString().padStart(2, '0');
+            
+            noteCard.innerHTML = `
+                <div class="note-timestamp">${timestamp}</div>
+                <div class="note-content">${note}</div>
+            `;
+            
+            // 将卡片添加到容器中
+            document.getElementById("note-container").appendChild(noteCard);
+            
+            // 清空输入框
+            document.getElementById("note-input").value = "";
+            
+            // 自动滚动到最新的笔记
+            document.getElementById("note-container").scrollLeft = document.getElementById("note-container").scrollWidth;
+        }
+    }
+    
+    // 点击按钮保存笔记
+    document.getElementById("take-note").addEventListener("click", saveNote);
+    
+    // 按下回车键保存笔记
+    document.getElementById("note-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // 阻止表单提交
+            saveNote();
+        }
+    });
+    
+    // 清空所有笔记
+    document.getElementById("clear-note").addEventListener("click", function() {
+        // 清空笔记容器
+        document.getElementById("note-container").innerHTML = "";
+        
+        // 添加一个空状态提示
+        var emptyState = document.createElement("div");
+        emptyState.className = "note-empty-state";
+        emptyState.textContent = "暂无笔记，开始记录吧！";
+        document.getElementById("note-container").appendChild(emptyState);
+    });
+    
+    // 初始化：添加空状态提示
+    window.addEventListener("DOMContentLoaded", function() {
+        var emptyState = document.createElement("div");
+        emptyState.className = "note-empty-state";
+        emptyState.textContent = "暂无笔记，开始记录吧！";
+        document.getElementById("note-container").appendChild(emptyState);
+    });
+    
+    const bgm = document.getElementById("bgm");
+    // 默认音频源
+    bgm.src = "bgm.mp3";
+
+    // 音频文件导入和播放逻辑
+    const audioFileInput = document.getElementById("audioFile");
+    audioFileInput.addEventListener("change", function(e) {
+        // 检查是否选择了文件
+        if (e.target.files.length > 0) {
+            // 获取选择的文件
+            const file = e.target.files[0];
+            // 创建本地文件URL
+            const fileURL = URL.createObjectURL(file);
+            // 设置音频源并自动播放
+            bgm.src = fileURL;
+            bgm.play().catch(error => {
+                console.log("播放失败，请用户交互后重试: ", error);
+            });
         }
     });
 
-
+    
 </script>
+
 </html>

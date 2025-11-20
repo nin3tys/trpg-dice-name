@@ -4,12 +4,44 @@
             color: #00796b;
             margin-bottom: 30px;
         }
+        
+        /* 深蓝色导航栏样式 */
+        .navbar {
+            background-color: #0a2463;
+            overflow: hidden;
+            width: 100%;
+            padding: 10px 0;
+            position: relative;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .navbar a {
+            float: left;
+            color: white;
+            text-align: center;
+            padding: 12px 16px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .navbar a:hover {
+            background-color: #1e3a8a;
+            color: #f0f9ff;
+        }
         body{
             background-color:lightcyan;
             text-align: center; /* 确保inline-block的container居中 */
         }
 
-        button{
+        #roll-dice
+        ,#roll-name{
             border: none;
             border-radius: 10px;
             padding: 10px 20px;
@@ -23,7 +55,8 @@
             margin: 50px auto;
         }
         
-        button:hover{
+        #roll-dice:hover
+        ,#roll-name:hover{
             background-color: #26a69a;
             transform: translateY(-2px);
         }
@@ -121,6 +154,12 @@
             }
         }*/
 
+        .note{
+            width: 360px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
         .container{
             border:none;
             border-radius: 10px;
@@ -132,3 +171,271 @@
             box-sizing: border-box; /* 确保内边距和边框不会增加总宽度 */
             backdrop-filter: blur(10px) brightness(150%);
         }
+        /* 音频播放器样式 */
+        .music_player {
+            margin: 30px auto;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background-color: rgba(224, 247, 250, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        /* 自定义音频播放器外观 */
+        audio {
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            outline: none;
+            /* 移除浏览器默认样式 */
+            /*-webkit-appearance: none;*/
+            background-color: #39C5BB;
+        }
+        
+        /* 针对不同浏览器的音频控件样式 */
+        audio::-webkit-media-controls-panel {
+            background-color: #e0f7fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        audio::-webkit-media-controls-play-button {
+            background-color: #39C5BB;
+            border-radius: 50%;
+            padding: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        audio::-webkit-media-controls-play-button:hover {
+            background-color: #26a69a;
+            transform: scale(1.1);
+        }
+        
+        /* 音频文件上传按钮样式 */
+        #audioFile {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #39C5BB;
+            color: #000000;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        #audioFile:hover {
+            background-color: #26a69a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 隐藏原始文件输入框，仅显示美化后的按钮 */
+        #audioFile::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+        
+        #audioFile::before {
+            content: '选择音频文件';
+            display: inline-block;
+            background: transparent;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        #audioFile:hover::before {
+            background: transparent;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .music_player {
+                width: 90%;
+                padding: 15px;
+            }
+            
+            audio {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* 背景图片样式 */
+        body {
+            /* 设置背景图片 */
+            background-image: url('../picture/生成特定风格图像.png');
+            /* 确保背景图片覆盖整个页面 */
+            background-size: cover;
+            /* 固定背景图片，不随页面滚动 */
+            background-attachment: fixed;
+            /* 居中背景图片 */
+            background-position: center;
+            /* 不重复背景图片 */
+            background-repeat: no-repeat;
+            /* 添加轻微的模糊效果以提高文字可读性 */
+            backdrop-filter: blur(2px);
+        }
+        
+        /* 为容器添加半透明背景，确保内容区域的可读性 */
+        .container {
+            background-color: rgba(255, 255, 255, 0.85);
+            /* 确保容器有足够的内边距 */
+            padding: 30px;
+            /* 添加圆角和阴影，与原有样式保持一致 */
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 为所有功能区域添加统一的背景样式 */
+        .function-section,
+        .note,
+        .music_player {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 功能区域之间的间距 */
+        .function-section {
+            margin-bottom: 25px;
+        }
+        
+        /* 确保各个功能区域内的内容居中对齐 */
+        .function-section > *,
+        .note > *,
+        .music_player > * {
+            margin-bottom: 10px;
+        }
+        
+/* 笔记功能样式 */
+.note {
+    margin-top: 20px;
+}
+
+.note-input-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.note-input-section input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.note-input-section button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#take-note {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#take-note:hover {
+    background-color: #45a049;
+}
+
+#clear-note {
+    background-color: #f44336;
+    color: white;
+}
+
+#clear-note:hover {
+    background-color: #da190b;
+}
+
+/* 笔记卡片容器 - 横向滚动 */
+.note-cards-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 15px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 100, 100, 0.5) rgba(0, 0, 0, 0);
+    min-height: 120px;
+    border: 2px dashed rgba(100, 100, 100, 0.3);
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 滚动条样式 */
+.note-cards-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.note-cards-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
+}
+
+.note-cards-container::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.5);
+    border-radius: 4px;
+}
+
+/* 笔记卡片样式 */
+.note-card {
+    flex: 0 0 auto;
+    width: 200px;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.note-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 笔记时间戳样式 */
+.note-timestamp {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+    text-align: right;
+}
+
+/* 笔记内容样式 */
+.note-content {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-height: 80px;
+    overflow-y: auto;
+}
+
+/* 空状态提示样式 */
+.note-empty-state {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    color: #999;
+    font-size: 16px;
+    font-style: italic;
+    text-align: center;
+}
+        
+
+        
