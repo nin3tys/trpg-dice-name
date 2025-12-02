@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>骰子结果显示</title>
+    <link rel="stylesheet" href="css/pl.css">
+</head>
+<body>
+    <div id="container">
+        <div id="dice-result-display">等待骰子结果...</div>
+    </div>
+</body>
+<script>
+    // 显示骰子结果的函数
+    function displayDiceResult() {
+        const container = document.getElementById('dice-result-display');
+        const stored = localStorage.getItem('lastDiceResult');
+        
+        if (stored) {
+            const diceData = JSON.parse(stored);
+            container.innerHTML = `
+                <p>骰子结果: ${diceData.result}</p>
+                <p>时间: ${new Date(diceData.timestamp).toLocaleString()}</p>
+            `;
+        } else {
+            container.innerHTML = '暂无骰子结果';
+        }
+    }
+    
+    // 初始化时显示一次
+    displayDiceResult();
+    
+    // 定期检查更新 (每秒检查一次)
+    setInterval(displayDiceResult, 1000);
+    
+    // 监听storage事件，当localStorage变化时立即更新
+    window.addEventListener('storage', function(event) {
+        if (event.key === 'lastDiceResult') {
+            displayDiceResult();
+        }
+    });
+</script>
+</html>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>TRPGdn</title>
-    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/trpg-dice.css">
     <!-- 所有样式已转移到all.css文件 -->
     <!-- 引入Transformers.js库 -->
     
@@ -84,6 +85,17 @@
             }
             // 创建p元素来应用样式
             document.getElementById("dice-result").innerHTML="<p>你掷出的点数是：" + diceRoll.join("，") + "，喵~</p>";
+            
+            // 保存结果到localStorage，用于局域网显示
+            try {
+                const diceData = {
+                    result: diceRoll.join("，"),
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('lastDiceResult', JSON.stringify(diceData));
+            } catch (e) {
+                console.log('保存骰子结果到localStorage失败:', e);
+            }
         } else {
             alert("请选择骰子类型和数量");
         }

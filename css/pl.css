@@ -1,0 +1,131 @@
+/* pl.css - 与trpg-dice.html保持统一的样式 */
+
+/* 基础样式 - 复制trpg-dice.css中的通用部分 */
+body {
+    /* 设置背景图片 */
+    background-image: url('../picture/生成特定风格图像.png');
+    /* 确保背景图片覆盖整个页面 */
+    background-size: cover;
+    /* 固定背景图片，不随页面滚动 */
+    background-attachment: fixed;
+    /* 居中背景图片 */
+    background-position: center;
+    /* 不重复背景图片 */
+    background-repeat: no-repeat;
+    /* 添加轻微的模糊效果以提高文字可读性 */
+    backdrop-filter: blur(2px);
+    text-align: center; /* 确保inline-block的container居中 */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* 容器样式 */
+.container {
+    display: inline-block; /* 使容器只占用内容所需的宽度 */
+    padding: 30px; /* 添加内边距，确保内容不紧贴边框 */
+    margin: 30px auto; /* 添加外边距，居中显示 */
+    text-align: center; /* 文本居中 */
+    max-width: 90%; /* 限制最大宽度，防止在大屏幕上过宽 */
+    box-sizing: border-box; /* 确保内边距和边框不会增加总宽度 */
+    
+    /* 半透明背景 */
+    background-color: rgba(255, 255, 255, 0.85);
+    /* 添加圆角和阴影 */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 标题样式 */
+h1 {
+    text-align: center;
+    font-size: 32px;
+    color: #00796b;
+    margin-bottom: 30px;
+}
+
+/* 结果显示区域样式 */
+#resultDisplay {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    min-height: 100px;
+    text-align: center;
+}
+
+/* 骰子结果显示样式 */
+.dice-result-item {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px 12px;
+    background-color: #e0f7fa;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: bold;
+    color: #00796b;
+}
+
+/* 无结果提示样式 */
+.no-result {
+    color: #999;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* 深蓝色导航栏样式 - 与trpg-dice.html保持一致 */
+.navbar {
+    background-color: #0a2463;
+    overflow: hidden;
+    width: 100%;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 12px 16px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #1e3a8a;
+    color: #f0f9ff;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 20px auto;
+    }
+    
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    #resultDisplay {
+        padding: 15px;
+    }
+    
+    .dice-result-item {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}

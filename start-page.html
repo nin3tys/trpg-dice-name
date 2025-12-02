@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRPG局域网房间创建</title>
+    <link rel="stylesheet" href="css/start-page.css">
+</head>
+<body>
+    <div id="container">
+        <h1>TRPG骰子工具</h1>
+        <button id="createRoomBtn">创建局域网房间</button>
+        <button id="joinRoomBtn">加入房间</button>
+        <p id="message"></p>
+        <!-- PowerShell脚本内容，将在点击按钮时生成 -->
+        <textarea id="scriptContent" style="display:none; width:100%; height:300px;"></textarea>
+        <a id="downloadLink" style="display:none;">下载IIS配置脚本</a>
+    </div>
+</body>
+<script>
+    // 获取页面元素
+    const createRoomBtn = document.getElementById('createRoomBtn');
+    const joinRoomBtn = document.getElementById('joinRoomBtn');
+    const message = document.getElementById('message');
+    const scriptContent = document.getElementById('scriptContent');
+    const downloadLink = document.getElementById('downloadLink');
+    
+    // 加入房间功能
+    function joinRoom() {
+        // 从localStorage获取房间列表
+        const rooms = JSON.parse(localStorage.getItem('trpgRooms')) || [];
+        
+        if (rooms.length > 0) {
+            // 如果有房间，默认加入第一个房间
+            localStorage.setItem('currentRoom', JSON.stringify(rooms[0]));
+            // 跳转到pl.html页面
+            window.location.href = 'pl.html';
+        } else {
+            // 没有搜索到房间时提示
+            message.textContent = '局域网内暂未搜索到房间';
+        }
+    }
+    
+
+    // 点击按钮创建IIS局域网网站
+    createRoomBtn.addEventListener('click', function() {
+        // 1. 生成PowerShell脚本内容
+        generateIISScript();
+        
+        // 2. 提示用户下载并运行脚本
+        message.textContent = '请下载并以管理员身份运行PowerShell脚本以创建IIS网站。脚本运行成功后，其他局域网用户可通过您的IP地址访问。';
+        downloadLink.style.display = 'block';
+        
+        // 3. 创建新房间并保存到房间列表
+        const newRoom = { 
+            name: '新房间_' + new Date().getTime(), 
+            host: 'localhost', 
+            port: 8080 
+        };
+        let rooms = JSON.parse(localStorage.getItem('trpgRooms')) || [];
+        rooms.unshift(newRoom);
+        localStorage.setItem('trpgRooms', JSON.stringify(rooms));
+        localStorage.setItem('currentRoom', JSON.stringify(newRoom));
+        
+        // 4. 本地直接跳转到骰子页面
+        setTimeout(() => {
+            window.location.href = "trpg-dice.html";
+        }, 1000);
+    });
+    
+    // 加入房间按钮事件监听
+    joinRoomBtn.addEventListener('click', joinRoom);
+
+    // 生成IIS配置PowerShell脚本
+    function generateIISScript() {
+        // 获取当前项目路径（简化处理，实际使用时可能需要调整）
+        const projectPath = 'D:\\project\\trpg-dice-name\\html';
+        
+        // PowerShell脚本内容
+        const script = `# TRPG骰子工具 - IIS局域网网站创建脚本
+# 请以管理员身份运行此脚本
+
+# 检查IIS是否已安装，如未安装则安装
+Write-Host "正在检查IIS..."
+if (-not (Get-WindowsFeature -Name Web-Server).Installed) {
+    Write-Host "IIS未安装，正在安装..."
+    Install-WindowsFeature -Name Web-Server -IncludeManagementTools
+    Write-Host "IIS安装完成！"
+}
+
+# 创建网站目录（如果不存在）
+$websitePath = "${projectPath}"
+if (-not (Test-Path $websitePath)) {
+    Write-Host "网站目录不存在，请确保路径正确：$websitePath"
+    Exit 1
+}
+
+# 创建或更新IIS网站
+Write-Host "正在配置IIS网站..."
+try {
+    # 检查网站是否已存在
+    $existingSite = Get-Website -Name "TRPGDice" -ErrorAction SilentlyContinue
+    if ($existingSite) {
+        # 更新现有网站
+        Set-ItemProperty "IIS:\Sites\TRPGDice" -name physicalPath -value $websitePath
+        Write-Host "已更新现有网站 'TRPGDice'"
+    } else {
+        # 创建新网站
+        New-Website -Name "TRPGDice" -PhysicalPath $websitePath -Port 80 -Force
+        Write-Host "成功创建新网站 'TRPGDice'"
+    }
+    
+    # 启动网站
+    Start-Website -Name "TRPGDice"
+    
+    # 获取本机IP地址
+    $ipAddress = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias Ethernet* | Select-Object -First 1).IPAddress
+    if (-not $ipAddress) {
+        $ipAddress = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias Wi-Fi* | Select-Object -First 1).IPAddress
+    }
+    
+    Write-Host "\n=========================================="
+    Write-Host "IIS网站创建成功！"
+    Write-Host "局域网访问地址: http://$ipAddress/"
+    Write-Host "本地访问地址: http://localhost/"
+    Write-Host "=========================================="
+    
+} catch {
+    Write-Host "配置IIS网站时出错: $_"
+    Write-Host "请确保以管理员身份运行此脚本"
+}
+
+Write-Host "按任意键退出..."
+$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')`;
+        
+        // 设置脚本内容到文本区域
+        scriptContent.value = script;
+        
+        // 创建下载链接
+        const blob = new Blob([script], {type: 'text/plain'});
+        const url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = 'create-trpg-iis-site.ps1';
+    }
+</script>
+</html>
