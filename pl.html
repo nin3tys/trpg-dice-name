@@ -4,27 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>骰子结果显示</title>
-    <link rel="stylesheet" href="css/pl.css">
+    <link rel="stylesheet" href="css/pl.css" id="main-css">
 </head>
 <body>
-    <div id="container">
-        <div id="dice-result-display">等待骰子结果...</div>
+    <!-- 深蓝色导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="https://space.bilibili.com/354031498?spm_id_from=333.1007.0.0" target="_blank">bilibili主页</a>
+            <a href="https://github.com/nin3tys/trpg-dice-name" target="_blank">github</a>
+            <a href="https://afdian.com/a/nin3tys" target="_blank">爱发电</a>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="title">骰子结果显示</h1>
+        <!-- 骰子结果显示区域 -->
+        <div class="function-section dice-result-section">
+            <div id="dice-result" class="hidden"></div>
+        </div>
+        <!-- 笔记功能区域 -->
+        <div class="function-section note">
+            <h2>笔记</h2>
+            <div class="note-input-section">
+                <input type="text" id="note-input" placeholder="输入笔记内容...">
+                <button id="take-note">添加笔记</button>
+                <button id="clear-note">清空笔记</button>
+            </div>
+            <div id="note-container" class="note-cards-container"></div>
+        </div>
     </div>
 </body>
 <script>
     // 显示骰子结果的函数
     function displayDiceResult() {
-        const container = document.getElementById('dice-result-display');
+        const diceResultDiv = document.getElementById('dice-result');
         const stored = localStorage.getItem('lastDiceResult');
         
-        if (stored) {
-            const diceData = JSON.parse(stored);
-            container.innerHTML = `
-                <p>骰子结果: ${diceData.result}</p>
-                <p>时间: ${new Date(diceData.timestamp).toLocaleString()}</p>
-            `;
-        } else {
-            container.innerHTML = '暂无骰子结果';
+        try {
+            if (stored) {
+                // 有骰子结果时：显示结果
+                const diceData = JSON.parse(stored);
+                diceResultDiv.innerHTML = `
+                    <div>骰子结果: ${diceData.result} 喵~</div>
+                    <div>时间: ${new Date(diceData.timestamp).toLocaleString()}</div>
+                `;
+                diceResultDiv.classList.remove('hidden');
+            } else {
+                // 无骰子结果时：隐藏结果区域
+                diceResultDiv.classList.add('hidden');
+            }
+        } catch (error) {
+            console.error('处理骰子结果时出错:', error);
+            // 出错时隐藏结果区域
+            diceResultDiv.classList.add('hidden');
         }
     }
     
@@ -39,6 +70,66 @@
         if (event.key === 'lastDiceResult') {
             displayDiceResult();
         }
+    });
+    
+    // 笔记功能实现
+    // 添加笔记
+    document.getElementById("take-note").addEventListener("click", function() {
+        // 获取输入的笔记内容
+        var noteContent = document.getElementById("note-input").value;
+        
+        // 检查内容是否为空
+        if (noteContent.trim() === "") {
+            return; // 空内容不添加
+        }
+        
+        // 获取当前时间戳
+        var timestamp = new Date();
+        
+        // 创建笔记卡片元素
+        var noteCard = document.createElement("div");
+        noteCard.className = "note-card";
+        
+        // 添加时间戳和内容
+        noteCard.innerHTML = "<div class='note-timestamp'>" + timestamp.toLocaleString() + "</div><div class='note-content'>" + noteContent + "</div>";
+        
+        // 获取笔记容器
+        var noteContainer = document.getElementById("note-container");
+        
+        // 检查是否有空状态提示，如果有则移除
+        var emptyState = noteContainer.querySelector(".note-empty-state");
+        if (emptyState) {
+            noteContainer.removeChild(emptyState);
+        }
+        
+        // 添加新笔记到容器的最后
+        noteContainer.appendChild(noteCard);
+        
+        // 清空输入框
+        document.getElementById("note-input").value = "";
+        
+        // 滚动到最新添加的笔记
+        noteCard.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "end" });
+    });
+    
+    // 清空所有笔记
+    document.getElementById("clear-note").addEventListener("click", function() {
+        // 清空笔记容器
+        document.getElementById("note-container").innerHTML = "";
+        
+        // 添加一个空状态提示
+        var emptyState = document.createElement("div");
+        emptyState.className = "note-empty-state";
+        emptyState.textContent = "暂无笔记，开始记录吧！";
+        document.getElementById("note-container").appendChild(emptyState);
+    });
+    
+    // 初始化：添加空状态提示
+    window.addEventListener("DOMContentLoaded", function() {
+        var emptyState = document.createElement("div");
+        emptyState.className = "note-empty-state";
+        emptyState.textContent = "暂无笔记，开始记录吧！";
+        document.getElementById("note-container").appendChild(emptyState);
     });
 </script>
 </html>

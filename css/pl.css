@@ -22,59 +22,33 @@ body {
 
 /* 容器样式 */
 .container {
-    display: inline-block; /* 使容器只占用内容所需的宽度 */
-    padding: 30px; /* 添加内边距，确保内容不紧贴边框 */
-    margin: 30px auto; /* 添加外边距，居中显示 */
-    text-align: center; /* 文本居中 */
-    max-width: 90%; /* 限制最大宽度，防止在大屏幕上过宽 */
-    box-sizing: border-box; /* 确保内边距和边框不会增加总宽度 */
-    
-    /* 半透明背景 */
     background-color: rgba(255, 255, 255, 0.85);
-    /* 添加圆角和阴影 */
+    padding: 30px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    margin: 20px auto;
+    text-align: center;
+    max-width: 90%;
+    box-sizing: border-box;
 }
 
 /* 标题样式 */
-h1 {
+.title {
     text-align: center;
     font-size: 32px;
     color: #00796b;
     margin-bottom: 30px;
 }
 
-/* 结果显示区域样式 */
-#resultDisplay {
-    margin: 20px 0;
-    padding: 20px;
+/* 功能区域样式 */
+.function-section {
     background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    margin-bottom: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    min-height: 100px;
-    text-align: center;
-}
-
-/* 骰子结果显示样式 */
-.dice-result-item {
-    display: inline-block;
-    margin: 5px;
-    padding: 8px 12px;
-    background-color: #e0f7fa;
-    border-radius: 4px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    font-size: 16px;
-    font-weight: bold;
-    color: #00796b;
-}
-
-/* 无结果提示样式 */
-.no-result {
-    color: #999;
-    font-style: italic;
-    padding: 20px;
+    margin-bottom: 25px;
 }
 
 /* 深蓝色导航栏样式 - 与trpg-dice.html保持一致 */
@@ -108,6 +82,32 @@ h1 {
     color: #f0f9ff;
 }
 
+/* 骰子结果显示区域 */
+#dice-result {
+    width: 360px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* 骰子结果内部样式 */
+#dice-result div {
+    display: inline-block;
+    margin: 0;
+    padding: 8px;
+    background-color: #e0f7fa;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    color: #00796b;
+    margin: 10px 0;
+}
+
+/* 隐藏元素的类 */
+.hidden {
+    display: none !important;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
     .container {
@@ -115,17 +115,137 @@ h1 {
         margin: 20px auto;
     }
     
-    h1 {
-        font-size: 24px;
-        margin-bottom: 20px;
+    #dice-result {
+        width: 100%;
     }
     
-    #resultDisplay {
-        padding: 15px;
-    }
-    
-    .dice-result-item {
+    #no-result {
         font-size: 14px;
-        padding: 6px 10px;
     }
+}
+
+/* 笔记功能样式 */
+.note {
+    margin-top: 20px;
+}
+
+.note-input-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.note-input-section input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.note-input-section button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#take-note {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#take-note:hover {
+    background-color: #45a049;
+}
+
+#clear-note {
+    background-color: #f44336;
+    color: white;
+}
+
+#clear-note:hover {
+    background-color: #da190b;
+}
+
+/* 笔记卡片容器 - 横向滚动 */
+.note-cards-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 15px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 100, 100, 0.5) rgba(0, 0, 0, 0);
+    min-height: 120px;
+    border: 2px dashed rgba(100, 100, 100, 0.3);
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 滚动条样式 */
+.note-cards-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.note-cards-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
+}
+
+.note-cards-container::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.5);
+    border-radius: 4px;
+}
+
+/* 笔记卡片样式 */
+.note-card {
+    flex: 0 0 auto;
+    width: 200px;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.note-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 笔记时间戳样式 */
+.note-timestamp {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+    text-align: right;
+}
+
+/* 笔记内容样式 */
+.note-content {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-height: 80px;
+    overflow-y: auto;
+}
+
+/* 空状态提示样式 */
+.note-empty-state {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    color: #999;
+    font-size: 16px;
+    font-style: italic;
+    text-align: center;
 }
